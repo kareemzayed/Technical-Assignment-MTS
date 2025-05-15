@@ -1,0 +1,17 @@
+{
+    "name": "kareemzayed/technical-assignment-mts",
+    "autoload": {
+        "psr-4": {
+            "Kareemzayed\\TechnicalAssignmentMts\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kareem Zayed Abdul Karim",
+            "email": "kareemzayed89@gmail.com"
+        }
+    ],
+    "require": {
+        "box/spout": "^3.3"
+    }
+}
