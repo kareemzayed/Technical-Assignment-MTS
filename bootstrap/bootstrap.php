@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
 use Src\Database\DatabaseConnection;
 use Src\Database\InvoiceSchemaBuilder;
 use Src\Database\PdoFactory;

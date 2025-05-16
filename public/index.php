@@ -2,30 +2,24 @@
 
 declare(strict_types=1);
 
-require dirname(__DIR__, 1) . '/bootstrap/bootstrap.php';
+require_once dirname(__DIR__, 1) . '/vendor/autoload.php';
+require_once dirname(__DIR__, 1) . '/bootstrap/bootstrap.php';
 
-use Src\Services\ExcelDataImporter;
-use Src\Repositories\CustomerRepository;
-use Src\Repositories\ProductRepository;
-use Src\Repositories\InvoiceRepository;
-use Src\Repositories\InvoiceItemRepository;
-use Src\Database\DatabaseConnection;
+use Src\Http\ResourceController;
 
-$pdo = DatabaseConnection::getInstance()->getConnection();
-$customerRepo = new CustomerRepository($pdo);
-$productRepo = new ProductRepository($pdo);
-$invoiceRepo = new InvoiceRepository($pdo);
-$invoiceItemRepo = new InvoiceItemRepository($pdo);
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
 
-$importer = new ExcelDataImporter(
-    $customerRepo,
-    $productRepo,
-    $invoiceRepo,
-    $invoiceItemRepo
-);
+$resource = $_GET['resource'] ?? null;
 
-$result = $importer->import(dirname(__DIR__, 1) . '/data.xlsx');
-
-echo "<pre>";
-print_r($result);
-echo "</pre>";
+try {
+    $controller = new ResourceController();
+    $response = $controller->handle($resource);
+    echo json_encode($response, JSON_PRETTY_PRINT);
+} catch (Throwable $e) {
+    http_response_code(500);
+    echo json_encode([
+        'error' => 'Server error',
+        'message' => $e->getMessage(),
+    ]);
+}

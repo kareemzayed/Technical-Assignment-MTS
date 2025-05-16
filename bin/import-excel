@@ -1,0 +1,50 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+require_once dirname(__DIR__, 1) . '/vendor/autoload.php';
+require_once dirname(__DIR__, 1) . '/bootstrap/bootstrap.php';
+
+use Src\Services\ExcelDataImporter;
+use Src\Repositories\CustomerRepository;
+use Src\Repositories\ProductRepository;
+use Src\Repositories\InvoiceRepository;
+use Src\Repositories\InvoiceItemRepository;
+use Src\Database\DatabaseConnection;
+
+// Get the Excel file path from the command
+$excelFile = $argv[1] ?? null;
+
+// If no file or file not found
+if (!$excelFile || !file_exists($excelFile)) {
+    echo "Please provide a valid Excel file path.\n";
+    exit(1);
+}
+
+echo "Importing from: {$excelFile}\n";
+
+// Connect to DB
+$pdo = DatabaseConnection::getInstance()->getConnection();
+
+// Create repositories
+$customerRepo = new CustomerRepository($pdo);
+$productRepo = new ProductRepository($pdo);
+$invoiceRepo = new InvoiceRepository($pdo);
+$invoiceItemRepo = new InvoiceItemRepository($pdo);
+
+// Use the importer
+$importer = new ExcelDataImporter(
+    $customerRepo,
+    $productRepo,
+    $invoiceRepo,
+    $invoiceItemRepo
+);
+
+try {
+    $importer->import($excelFile);
+    echo "Import finished.\n";
+} catch (Throwable $e) {
+    echo "Error: " . $e->getMessage() . "\n";
+    exit(1);
+}

@@ -13,5 +13,12 @@
     ],
     "require": {
         "box/spout": "^3.3"
+    },
+    "scripts": {
+        "import-excel": "php bin/import-excel data.xlsx",
+        "test": "phpunit --colors=always"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
     }
 }

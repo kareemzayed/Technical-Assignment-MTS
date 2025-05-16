@@ -1,0 +1,1 @@
+{"version":1,"defects":{"CustomerRepositoryTest::testCreateCustomer":8,"ProductRepositoryTest::testCreateProduct":8},"times":{"CustomerRepositoryTest::testCreateCustomer":0.099,"CustomerRepositoryTest::testFindCustomer":0.098,"ProductRepositoryTest::testCreateProduct":0.079}}
