@@ -2,7 +2,7 @@
     "name": "kareemzayed/technical-assignment-mts",
     "autoload": {
         "psr-4": {
-            "Kareemzayed\\TechnicalAssignmentMts\\": "src/"
+            "Src\\": "src/"
         }
     },
     "authors": [
