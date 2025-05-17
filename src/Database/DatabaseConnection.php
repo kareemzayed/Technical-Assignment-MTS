@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Database;
 
 use PDO;
-use PDOException;
-use RuntimeException;
 use App\Database\PdoFactory;
 use App\Database\Migrations\CreateCustomersTableMigration;
 use App\Database\Migrations\CreateInvoiceItemsTableMigration;
@@ -49,11 +47,11 @@ class DatabaseConnection
     /**
      * Prevent unserialization of singleton instance
      *
-     * @throws RuntimeException Always throws when attempted
+     * @throws \RuntimeException Always throws when attempted
      */
     public function __wakeup()
     {
-        throw new RuntimeException("Cannot unserialize singleton");
+        throw new \RuntimeException("Cannot unserialize singleton");
     }
 
     /**
@@ -83,7 +81,7 @@ class DatabaseConnection
     public static function getInstance(): self
     {
         if (self::$instance === null) {
-            throw new RuntimeException("DatabaseConnection must be initialized first using init().");
+            throw new \RuntimeException("DatabaseConnection must be initialized first using init().");
         }
 
         return self::$instance;
@@ -94,8 +92,7 @@ class DatabaseConnection
      *
      * @return PDO Active PDO connection
      *
-     * @throws PDOException If connection fails
-     * @throws RuntimeException If directory creation fails
+     * @throws RuntimeException If connection fails or directory creation fails
      */
     public function getConnection(): PDO
     {
@@ -115,8 +112,8 @@ class DatabaseConnection
                     'create_products_table' => new CreateProductsTableMigration(),
                 ]);
                 $migrationRunner->up($this->connection);
-            } catch (PDOException $e) {
-                throw new PDOException("Database connection failed: " . $e->getMessage(), (int)$e->getCode(), $e);
+            } catch (\Throwable $e) {
+                throw new \RuntimeException("Database connection failed: " . $e->getMessage(), (int)$e->getCode(), $e);
             }
         }
 
@@ -126,14 +123,14 @@ class DatabaseConnection
     /**
      * Ensure the database directory exists
      *
-     * @throws RuntimeException If directory creation fails
+     * @throws \RuntimeException If directory creation fails
      */
     private function ensureDirectoryExists(): void
     {
         $dir = dirname($this->dbPath);
 
         if (!is_dir($dir) && !mkdir($dir, 0755, true) && !is_dir($dir)) {
-            throw new RuntimeException(
+            throw new \RuntimeException(
                 sprintf('Directory "%s" could not be created', $dir)
             );
         }

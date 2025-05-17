@@ -11,8 +11,7 @@ use App\Contracts\RepositoryInterface;
  * Repository for invoice data operations
  *
  * Handles all database interactions for invoices including
- * CRUD operations, reporting, and business logic related to
- * invoice management.
+ * CRUD operations.
  */
 class InvoiceRepository extends BaseRepository implements RepositoryInterface
 {
@@ -41,11 +40,7 @@ class InvoiceRepository extends BaseRepository implements RepositoryInterface
     /**
      * Create a new invoice
      *
-     * @param array $data Invoice data [
-     *     'invoice_date' => string (Y-m-d),
-     *     'customer_id' => int,
-     *     'grand_total' => float
-     * ]
+     * @param array $data Invoice data.
      * @return int ID of the newly created invoice
      */
     public function create(array $data): int

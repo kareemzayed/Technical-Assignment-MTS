@@ -44,7 +44,7 @@ class CustomerRepository extends BaseRepository implements RepositoryInterface
     /**
      * Create a new customer record
      *
-     * @param array $data Customer data [name, address]
+     * @param array $data Customer data
      * @return int ID of newly created customer
      */
     public function create(array $data): int
@@ -62,7 +62,7 @@ class CustomerRepository extends BaseRepository implements RepositoryInterface
      * Update an existing customer record
      *
      * @param int $id Customer ID to update
-     * @param array $data New customer data [name, address]
+     * @param array $data New customer data
      * @return bool True if update was successful, false otherwise
      */
     public function update(int $id, array $data): bool

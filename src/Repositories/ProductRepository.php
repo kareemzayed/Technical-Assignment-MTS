@@ -11,7 +11,7 @@ use App\Contracts\RepositoryInterface;
  * Repository for product data operations
  *
  * Handles all database interactions for products including
- * CRUD operations, inventory management, and product search.
+ * CRUD operations.
  */
 class ProductRepository extends BaseRepository implements RepositoryInterface
 {
@@ -43,10 +43,7 @@ class ProductRepository extends BaseRepository implements RepositoryInterface
     /**
      * Create a new product
      *
-     * @param array $data Product data [
-     *     'name' => string,
-     *     'price' => float,
-     * ]
+     * @param array $data Product data
      * @return int ID of the newly created product
      */
     public function create(array $data): int

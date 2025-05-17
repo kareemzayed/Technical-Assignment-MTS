@@ -12,18 +12,31 @@ use App\Repositories\ProductRepository;
 use App\Repositories\CustomerRepository;
 use App\Repositories\InvoiceItemRepository;
 
+/**
+ * Maps resource names to their corresponding repository classes and instantiates them.
+ */
 class ResourceMap
 {
     /**
-     * Map of available repositories
+     * Map of resource keys to repository class names.
+     *
+     * @var array<string, RepositoryInterface>
      */
     protected static array $map = [
-        'customers' => CustomerRepository::class,
-        'products' => ProductRepository::class,
-        'invoices' => InvoiceRepository::class,
+        'customers'     => CustomerRepository::class,
+        'products'      => ProductRepository::class,
+        'invoices'      => InvoiceRepository::class,
         'invoice_items' => InvoiceItemRepository::class,
     ];
 
+    /**
+     * Resolve the repository class based on the given resource name.
+     *
+     * @param string $resource The resource identifier.
+     * @return RepositoryInterface The instantiated repository.
+     *
+     * @throws InvalidArgumentException If the resource is not mapped.
+     */
     public static function resolve(string $resource): RepositoryInterface
     {
         $resource = strtolower($resource);
@@ -33,9 +46,9 @@ class ResourceMap
             throw new InvalidArgumentException("Unknown resource: $resource");
         }
 
-        $class = self::$map[$resource];
+        $repoClass = self::$map[$resource];
         $pdo = DatabaseConnection::getInstance()->getConnection();
 
-        return new $class($pdo);
+        return new $repoClass($pdo);
     }
 }

@@ -10,16 +10,25 @@ use PHPUnit\Framework\TestCase;
 use App\Database\DatabaseConnection;
 use App\Repositories\ProductRepository;
 
+/**
+ * Unit tests for the ProductRepository class.
+ */
 final class ProductRepositoryTest extends TestCase
 {
+    /**
+     * @var ProductRepository
+     */
     private ProductRepository $repo;
 
+    /**
+     * Prepare the test environment.
+     */
     protected function setUp(): void
     {
-        // Use a test database
+        // Define path to a dedicated test SQLite database
         $dbPath = dirname(__DIR__) . '/database/test.sqlite';
 
-        // Replace DB path for testing
+        // Initialize the database connection
         DatabaseConnection::init(
             dbPath: $dbPath,
             pdoFactory: new PdoFactory(),
@@ -30,12 +39,17 @@ final class ProductRepositoryTest extends TestCase
             ]
         );
 
+        // Inject the connection into the repository
         $this->repo = new ProductRepository(DatabaseConnection::getInstance()->getConnection());
 
-        // Clean database before each test
+        // Clear any existing test data
         DatabaseConnection::getInstance()->getConnection()->exec('DELETE FROM products');
     }
 
+    /**
+     * Test creating a product in the database.
+     * @return void
+     */
     public function testCreateProduct(): void
     {
         $data = ['name' => 'butter', 'price' => '31.5'];

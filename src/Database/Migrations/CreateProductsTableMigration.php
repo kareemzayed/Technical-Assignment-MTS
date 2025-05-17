@@ -7,8 +7,17 @@ namespace App\Database\Migrations;
 use PDO;
 use App\Contracts\MigrationInterface;
 
+/**
+ * Migration for creating the products table
+ */
 class CreateProductsTableMigration implements MigrationInterface
 {
+    /**
+     * Creates the products table.
+     *
+     * @param PDO $pdo Active database connection
+     * @return void
+     */
     public function up(PDO $pdo): void
     {
         $pdo->exec('
@@ -20,6 +29,13 @@ class CreateProductsTableMigration implements MigrationInterface
         ');
     }
 
+    /**
+     * Drops the products table
+     *
+     * Safely removes the table if it exists.
+     * @param PDO $pdo Active database connection
+     * @return void
+     */
     public function down(PDO $pdo): void
     {
         $pdo->exec('DROP TABLE IF EXISTS products');

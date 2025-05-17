@@ -23,7 +23,6 @@ class PdoFactory
      * 
      * @return PDO A configured PDO database connection instance
      * 
-     * @throws \PDOException If the connection attempt fails
      */
     public function create(string $dsn, array $options = []): PDO
     {

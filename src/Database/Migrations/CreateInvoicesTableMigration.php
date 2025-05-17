@@ -7,8 +7,17 @@ namespace App\Database\Migrations;
 use PDO;
 use App\Contracts\MigrationInterface;
 
+/**
+ * Migration for creating the invoices table
+ */
 class CreateInvoicesTableMigration implements MigrationInterface
 {
+    /**
+     * Creates the invoices table structure.
+     *
+     * @param PDO $pdo Active database connection
+     * @return void
+     */
     public function up(PDO $pdo): void
     {
         $pdo->exec('
@@ -22,6 +31,12 @@ class CreateInvoicesTableMigration implements MigrationInterface
         ');
     }
 
+    /**
+     * Reverts the invoices table creation
+     * 
+     * @param PDO $pdo Active database connection
+     * @return void
+     */
     public function down(PDO $pdo): void
     {
         $pdo->exec('DROP TABLE IF EXISTS invoices');

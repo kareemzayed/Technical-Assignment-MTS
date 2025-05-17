@@ -5,25 +5,24 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use PDO;
-use PDOException;
 use PDOStatement;
 
 /**
- * Abstract base repository providing common database operations
- *
- * Implements core CRUD operations and error handling to be extended by
- * concrete repository classes. Serves as an abstraction layer between
- * business logic and database operations.
+ * Provides common database operation methods for all repositories.
  */
 abstract class BaseRepository
 {
-    /** @var PDO Active database connection */
+    /**
+     * The PDO database connection.
+     *
+     * @var PDO
+     */
     protected PDO $pdo;
 
     /**
-     * Initialize repository with database connection
+     * BaseRepository constructor.
      *
-     * @param PDO $pdo Active PDO database connection
+     * @param PDO $pdo The PDO connection instance.
      */
     public function __construct(PDO $pdo)
     {
@@ -31,30 +30,33 @@ abstract class BaseRepository
     }
 
     /**
-     * Execute a parameterized SQL query
+     * Execute a SQL statement with optional parameters.
      *
-     * @param string $sql The SQL query with parameter placeholders
-     * @param array $params Associative array of parameters [':param' => value]
-     * @return PDOStatement|false Prepared statement on success, false on failure
+     * @param string $sql The SQL query to execute.
+     * @param array $params Parameters to bind in the query.
+     * @return PDOStatement The prepared and executed statement.
+     *
+     * @throws \RuntimeException If an error occurs during execution.
      */
-    protected function execute(string $sql, array $params = []): PDOStatement|false
+    protected function execute(string $sql, array $params = []): PDOStatement
     {
         try {
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
             return $stmt;
-        } catch (PDOException $e) {
-            error_log("Database error: " . $e->getMessage());
-            return false;
+        } catch (\Throwable $e) {
+            throw new \RuntimeException("Database execution failed: " . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 
     /**
-     * Execute an INSERT statement and return last insert ID
+     * Insert a new record and return the last insert ID.
      *
-     * @param string $sql INSERT SQL statement
-     * @param array $params Associative array of parameters
-     * @return int|false Insert ID on success, false on failure
+     * @param string $sql The insert SQL query.
+     * @param array $params Parameters to bind in the insert query.
+     * @return int The ID of the inserted record.
+     *
+     * @throws RuntimeException If an error occurs during insertion.
      */
     protected function insert(string $sql, array $params = []): int|bool
     {
@@ -62,9 +64,8 @@ abstract class BaseRepository
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($params);
             return (int) $this->pdo->lastInsertId();
-        } catch (PDOException $e) {
-            error_log("Database error: " . $e->getMessage());
-            return false;
+        } catch (\Throwable $e) {
+            throw new \RuntimeException("Insert operation failed: " . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 }

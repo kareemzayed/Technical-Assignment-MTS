@@ -10,16 +10,27 @@ use PHPUnit\Framework\TestCase;
 use App\Database\DatabaseConnection;
 use App\Repositories\CustomerRepository;
 
+/**
+ * Unit tests for the CustomerRepository.
+ */
 final class CustomerRepositoryTest extends TestCase
 {
+    /**
+     * @var CustomerRepository
+     */
     private CustomerRepository $repo;
 
+    /**
+     * Set up the test environment.
+     * Initializes the database and clears the customers table.
+     * @return void
+     */
     protected function setUp(): void
     {
-        // Use a test database
+        // Define path to a dedicated test SQLite database
         $dbPath = dirname(__DIR__) . '/database/test.sqlite';
 
-        // Replace DB path for testing
+        // Initialize the database connection
         DatabaseConnection::init(
             dbPath: $dbPath,
             pdoFactory: new PdoFactory(),
@@ -30,12 +41,17 @@ final class CustomerRepositoryTest extends TestCase
             ]
         );
 
+        // Inject the connection into the repository
         $this->repo = new CustomerRepository(DatabaseConnection::getInstance()->getConnection());
 
-        // Clean database before each test
+        // Clear any existing test data
         DatabaseConnection::getInstance()->getConnection()->exec('DELETE FROM customers');
     }
 
+    /**
+     * Test creating a customer record.
+     * @return void
+     */
     public function testCreateCustomer(): void
     {
         $data = ['name' => 'John Doe', 'address' => '123 Main St'];

@@ -7,8 +7,19 @@ namespace App\Database\Migrations;
 use PDO;
 use App\Contracts\MigrationInterface;
 
+/**
+ * Migration for creating the invoice_items table
+ * 
+ * Establishes the relationship between invoices and products through line items.
+ */
 class CreateInvoiceItemsTableMigration implements MigrationInterface
 {
+    /**
+     * Creates the invoice_items table with foreign key constraints
+     *
+     * @param PDO $pdo Active database connection
+     * @return void
+     */
     public function up(PDO $pdo): void
     {
         $pdo->exec('
@@ -24,6 +35,13 @@ class CreateInvoiceItemsTableMigration implements MigrationInterface
         ');
     }
 
+    /**
+     * Drops the invoice_items table
+     *
+     * Safely removes the table if it exists.
+     * @param PDO $pdo Active database connection
+     * @return void
+     */
     public function down(PDO $pdo): void
     {
         $pdo->exec('DROP TABLE IF EXISTS invoice_items');

@@ -5,15 +5,12 @@ use App\Database\PdoFactory;
 
 /**
  * Database Initialization Script
- * 
- * Configures and initializes the application database connection
- * with proper schema setup and connection settings.
  */
 
 // Database file path configuration
 $databasePath = dirname(__DIR__, 1) . '/database/invoice.sqlite';
 
-// Initialize database connection with schema builder
+// Initialize database connection
 DatabaseConnection::init(
     dbPath: $databasePath,
     pdoFactory: new PdoFactory(),

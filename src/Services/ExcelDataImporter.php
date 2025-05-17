@@ -37,10 +37,11 @@ class ExcelDataImporter
     /**
      * Import data from Excel file to database tables
      *
-     * @param string $filePath Path to the Excel (.xlsx) file
-     * @return array|null Summary of imported records count, null for fail.
+     * @param string $filePath Path to the Excel file
+     * @return array Summary of imported records count.
+     * @throws \RuntimeException If an error occurs during reading the excel file.
      */
-    public function import(string $filePath): ?array
+    public function import(string $filePath): array
     {
         try {
             $reader = ReaderEntityFactory::createXLSXReader();
@@ -111,9 +112,8 @@ class ExcelDataImporter
             $reader->close();
 
             return $importSummary;
-        } catch (RuntimeException $e) {
-            error_log("Error Reading The Excel File: " . $e->getMessage());
-            return null;
+        } catch (\Throwable $e) {
+            throw new \RuntimeException("Error Reading The Excel File: " . $e->getMessage(), (int) $e->getCode(), $e);
         }
     }
 

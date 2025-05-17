@@ -10,9 +10,7 @@ use App\Contracts\RepositoryInterface;
 /**
  * Repository for invoice item data operations
  *
- * Handles all database interactions for invoice line items,
- * including CRUD operations and business logic related to
- * invoice items.
+ * Handles all database interactions for invoice line items.
  */
 class InvoiceItemRepository extends BaseRepository implements RepositoryInterface
 {
@@ -44,12 +42,7 @@ class InvoiceItemRepository extends BaseRepository implements RepositoryInterfac
     /**
      * Create a new invoice item
      *
-     * @param array $data Invoice item data [
-     *     'invoice_id' => int,
-     *     'product_id' => int,
-     *     'quantity' => float,
-     *     'total' => float
-     * ]
+     * @param array $data Invoice item data.
      * @return int ID of the newly created invoice item
      */
     public function create(array $data): int
