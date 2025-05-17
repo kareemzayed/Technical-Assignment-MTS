@@ -8,7 +8,7 @@ use PDO;
 use App\Database\PdoFactory;
 use PHPUnit\Framework\TestCase;
 use App\Database\DatabaseConnection;
-use App\Repositories\ProductRepository;
+use App\Database\Repositories\ProductRepository;
 
 /**
  * Unit tests for the ProductRepository class.

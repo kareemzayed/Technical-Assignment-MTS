@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories;
+namespace App\Database\Repositories;
 
 use PDO;
 use PDOStatement;

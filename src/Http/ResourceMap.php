@@ -7,10 +7,10 @@ namespace App\Http;
 use InvalidArgumentException;
 use App\Database\DatabaseConnection;
 use App\Contracts\RepositoryInterface;
-use App\Repositories\InvoiceRepository;
-use App\Repositories\ProductRepository;
-use App\Repositories\CustomerRepository;
-use App\Repositories\InvoiceItemRepository;
+use App\Database\Repositories\InvoiceRepository;
+use App\Database\Repositories\ProductRepository;
+use App\Database\Repositories\CustomerRepository;
+use App\Database\Repositories\InvoiceItemRepository;
 
 /**
  * Maps resource names to their corresponding repository classes and instantiates them.

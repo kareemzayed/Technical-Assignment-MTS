@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories;
+namespace App\Database\Repositories;
 
-use App\Repositories\BaseRepository;
+use App\Database\Repositories\BaseRepository;
 use App\Contracts\RepositoryInterface;
 
 /**

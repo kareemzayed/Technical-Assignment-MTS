@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Services;
 
 use RuntimeException;
-use App\Repositories\InvoiceRepository;
-use App\Repositories\ProductRepository;
-use App\Repositories\CustomerRepository;
-use App\Repositories\InvoiceItemRepository;
+use App\Database\Repositories\InvoiceRepository;
+use App\Database\Repositories\ProductRepository;
+use App\Database\Repositories\CustomerRepository;
+use App\Database\Repositories\InvoiceItemRepository;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 
 /**

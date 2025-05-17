@@ -6,10 +6,10 @@ require_once dirname(__DIR__, 1) . '/vendor/autoload.php';
 require_once dirname(__DIR__, 1) . '/bootstrap/bootstrap.php';
 
 use App\Services\ExcelDataImporter;
-use App\Repositories\CustomerRepository;
-use App\Repositories\ProductRepository;
-use App\Repositories\InvoiceRepository;
-use App\Repositories\InvoiceItemRepository;
+use App\Database\Repositories\CustomerRepository;
+use App\Database\Repositories\ProductRepository;
+use App\Database\Repositories\InvoiceRepository;
+use App\Database\Repositories\InvoiceItemRepository;
 use App\Database\DatabaseConnection;
 
 // Get the Excel file path from the command
