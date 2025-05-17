@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Src\Database;
+namespace App\Database;
 
 use PDO;
 

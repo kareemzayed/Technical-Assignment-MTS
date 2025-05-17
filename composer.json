@@ -2,7 +2,8 @@
     "name": "kareemzayed/technical-assignment-mts",
     "autoload": {
         "psr-4": {
-            "Src\\": "src/"
+            "App\\": "src/",
+            "Tests\\": "tests/"
         }
     },
     "authors": [

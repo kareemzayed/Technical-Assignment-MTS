@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Src\Services;
+namespace App\Services;
 
 use RuntimeException;
-use Src\Repositories\InvoiceRepository;
-use Src\Repositories\ProductRepository;
-use Src\Repositories\CustomerRepository;
-use Src\Repositories\InvoiceItemRepository;
+use App\Repositories\InvoiceRepository;
+use App\Repositories\ProductRepository;
+use App\Repositories\CustomerRepository;
+use App\Repositories\InvoiceItemRepository;
 use Box\Spout\Reader\Common\Creator\ReaderEntityFactory;
 
 /**

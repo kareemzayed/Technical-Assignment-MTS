@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-use Src\Database\PdoFactory;
+namespace Tests;
+
+use PDO;
+use App\Database\PdoFactory;
 use PHPUnit\Framework\TestCase;
-use Src\Database\DatabaseConnection;
-use Src\Database\InvoiceSchemaBuilder;
-use Src\Repositories\ProductRepository;
+use App\Database\DatabaseConnection;
+use App\Repositories\ProductRepository;
 
 final class ProductRepositoryTest extends TestCase
 {
@@ -25,8 +27,7 @@ final class ProductRepositoryTest extends TestCase
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
-            ],
-            schemaBuilder: new InvoiceSchemaBuilder()
+            ]
         );
 
         $this->repo = new ProductRepository(DatabaseConnection::getInstance()->getConnection());

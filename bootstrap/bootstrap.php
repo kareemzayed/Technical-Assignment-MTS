@@ -1,8 +1,7 @@
 <?php
 
-use Src\Database\DatabaseConnection;
-use Src\Database\InvoiceSchemaBuilder;
-use Src\Database\PdoFactory;
+use App\Database\DatabaseConnection;
+use App\Database\PdoFactory;
 
 /**
  * Database Initialization Script
@@ -22,6 +21,5 @@ DatabaseConnection::init(
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES => false,
-    ],
-    schemaBuilder: new InvoiceSchemaBuilder()
+    ]
 );

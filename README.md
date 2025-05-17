@@ -21,6 +21,7 @@ Make sure you have Composer installed, then run:
 
 ```bash
 composer install
+composer dump-autoload
 ```
 
 ### 3. Import Excel Data

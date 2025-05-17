@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Src\Repositories;
+namespace App\Repositories;
 
-use Src\Repositories\BaseRepository;
-use Src\Contracts\RepositoryInterface;
+use App\Repositories\BaseRepository;
+use App\Contracts\RepositoryInterface;
 
 /**
  * Customer repository handling all database operations for customers

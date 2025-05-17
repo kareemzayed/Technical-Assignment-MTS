@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Src\Http;
+namespace App\Http;
 
-use Src\Http\ResourceMap;
+use App\Http\ResourceMap;
 
 class ResourceController
 {

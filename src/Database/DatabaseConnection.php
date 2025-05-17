@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Src\Database;
+namespace App\Database;
 
 use PDO;
 use PDOException;
 use RuntimeException;
-use Src\Contracts\DatabaseConnectionInterface;
-use Src\Database\PdoFactory;
-use Src\Contracts\SchemaBuilderInterface;
+use App\Database\PdoFactory;
+use App\Database\Migrations\CreateCustomersTableMigration;
+use App\Database\Migrations\CreateInvoiceItemsTableMigration;
+use App\Database\Migrations\CreateInvoicesTableMigration;
+use App\Database\Migrations\CreateProductsTableMigration;
 
 /**
  * Database connection handler (Singleton pattern)
@@ -18,7 +20,7 @@ use Src\Contracts\SchemaBuilderInterface;
  * thread-safe access to the PDO instance. Handles schema initialization
  * and ensures proper database directory structure.
  */
-class DatabaseConnection implements DatabaseConnectionInterface
+class DatabaseConnection
 {
     /** @var self|null Singleton instance */
     private static ?self $instance = null;
@@ -32,13 +34,11 @@ class DatabaseConnection implements DatabaseConnectionInterface
      * @param string $dbPath Path to database file
      * @param PdoFactory $pdoFactory Factory for creating PDO instances
      * @param array $options Additional PDO connection options
-     * @param SchemaBuilderInterface|null $schemaBuilder Optional schema initializer
      */
     private function __construct(
         private readonly string $dbPath,
         private readonly PdoFactory $pdoFactory,
         private readonly array $options = [],
-        private readonly ?SchemaBuilderInterface $schemaBuilder = null
     ) {}
 
     /**
@@ -62,16 +62,14 @@ class DatabaseConnection implements DatabaseConnectionInterface
      * @param string $dbPath Path to SQLite database file
      * @param PdoFactory $pdoFactory Factory for creating PDO instances
      * @param array $options Additional PDO connection options
-     * @param SchemaBuilderInterface|null $schemaBuilder Optional schema initializer
      */
     public static function init(
         string $dbPath,
         PdoFactory $pdoFactory,
         array $options = [],
-        ?SchemaBuilderInterface $schemaBuilder = null
     ): void {
         if (self::$instance === null) {
-            self::$instance = new self($dbPath, $pdoFactory, $options, $schemaBuilder);
+            self::$instance = new self($dbPath, $pdoFactory, $options);
         }
     }
 
@@ -110,9 +108,13 @@ class DatabaseConnection implements DatabaseConnectionInterface
                 $this->connection = $this->pdoFactory->create($dsn, $this->options);
                 $this->connection->exec('PRAGMA foreign_keys = ON');
 
-                if ($this->schemaBuilder !== null) {
-                    $this->schemaBuilder->createSchema($this->connection);
-                }
+                $migrationRunner = new MigrationRunner([
+                    'create_customers_table' => new CreateCustomersTableMigration(),
+                    'create_invoice_items_table' => new CreateInvoiceItemsTableMigration(),
+                    'create_invoices_table' => new CreateInvoicesTableMigration(),
+                    'create_products_table' => new CreateProductsTableMigration(),
+                ]);
+                $migrationRunner->up($this->connection);
             } catch (PDOException $e) {
                 throw new PDOException("Database connection failed: " . $e->getMessage(), (int)$e->getCode(), $e);
             }

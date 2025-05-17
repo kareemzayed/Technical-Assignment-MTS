@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Src\Http;
+namespace App\Http;
 
 use InvalidArgumentException;
-use Src\Database\DatabaseConnection;
-use Src\Contracts\RepositoryInterface;
-use Src\Repositories\InvoiceRepository;
-use Src\Repositories\ProductRepository;
-use Src\Repositories\CustomerRepository;
-use Src\Repositories\InvoiceItemRepository;
+use App\Database\DatabaseConnection;
+use App\Contracts\RepositoryInterface;
+use App\Repositories\InvoiceRepository;
+use App\Repositories\ProductRepository;
+use App\Repositories\CustomerRepository;
+use App\Repositories\InvoiceItemRepository;
 
 class ResourceMap
 {
