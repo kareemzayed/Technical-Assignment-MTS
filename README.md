@@ -1,9 +1,3 @@
-# 🧾 Invoice Management System
-
-This project is a simple invoice management system built with native PHP and designed for importing Excel data and exposing resources via JSON endpoints. It uses a well-structured relational database schema to manage customers, products, invoices, and invoice items.
-
----
-
 ## 🚀 Installation & Setup Guide
 
 Follow these steps to install and run the project locally:
