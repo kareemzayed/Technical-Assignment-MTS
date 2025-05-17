@@ -7,6 +7,7 @@ namespace Src\Database;
 use PDO;
 use PDOException;
 use RuntimeException;
+use Src\Contracts\DatabaseConnectionInterface;
 use Src\Database\PdoFactory;
 use Src\Contracts\SchemaBuilderInterface;
 
@@ -17,7 +18,7 @@ use Src\Contracts\SchemaBuilderInterface;
  * thread-safe access to the PDO instance. Handles schema initialization
  * and ensures proper database directory structure.
  */
-class DatabaseConnection
+class DatabaseConnection implements DatabaseConnectionInterface
 {
     /** @var self|null Singleton instance */
     private static ?self $instance = null;
